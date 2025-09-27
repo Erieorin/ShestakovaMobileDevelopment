@@ -10,6 +10,7 @@ import java.util.List;
 public class RecipeRepositoryImpl implements RecipeRepository {
     private List<Recipe> testRecipes = new ArrayList<>();
     private List<User> users = new ArrayList<>();
+    private List<Recipe> favorites = new ArrayList<>();
 
     public RecipeRepositoryImpl() {
         testRecipes.add(new Recipe(1, "Борщ"));
@@ -33,6 +34,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 
     @Override
     public boolean addRecipe(Recipe recipe) {
+
         return testRecipes.add(recipe);
     }
 
@@ -44,6 +46,14 @@ public class RecipeRepositoryImpl implements RecipeRepository {
             }
         }
         return false;
+    }
+
+    public boolean addRecipeToFavorites(Recipe recipe) {
+        return favorites.add(recipe);
+    }
+
+    public List<Recipe> getFavorites() {
+        return favorites;
     }
 
     @Override

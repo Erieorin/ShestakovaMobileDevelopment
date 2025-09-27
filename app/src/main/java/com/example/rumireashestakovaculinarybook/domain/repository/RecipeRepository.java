@@ -9,6 +9,8 @@ public interface RecipeRepository {
     Recipe getRecipeById(int id);
     boolean addRecipe(Recipe recipe);
     boolean editRecipe(Recipe recipe);
+    boolean addRecipeToFavorites(Recipe recipe);
+    List<Recipe> getFavorites();
     boolean login(String username, String password);
     boolean register(User user);
 }

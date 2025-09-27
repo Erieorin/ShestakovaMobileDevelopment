@@ -19,6 +19,16 @@
         android:layout_height="wrap_content"
         android:text="Редактировать рецепт" />
     <Button
+        android:id="@+id/btnAddFavorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Добавить в избранное" />
+    <Button
+        android:id="@+id/btnGetFavorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Показать избранные" />
+    <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
