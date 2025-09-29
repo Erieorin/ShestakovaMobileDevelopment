@@ -12,7 +12,7 @@ public class MovieRepositoryImpl implements MovieRepository {
     private static final String KEY_MOVIE_NAME = "favorite_movie_name";
     private static final String KEY_MOVIE_ID = "favorite_movie_id";
 
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     public MovieRepositoryImpl(Context context) {
         sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
