@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "«ru.mirea.Shestakova.Lesson9"
+rootProject.name = "ru.mirea.Shestakova.Lesson9"
 include(":app")
  
