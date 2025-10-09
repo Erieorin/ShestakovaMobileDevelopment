@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "300676759757",
+    "project_id": "culinaryapp-b0ce3",
+    "storage_bucket": "culinaryapp-b0ce3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300676759757:android:073b9bc0e292bd11d4e984",
+        "android_client_info": {
+          "package_name": "com.example.rumireashestakovaculinarybook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT8rnw6lVkLz9q4xnDgGnqkXMES65tMUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

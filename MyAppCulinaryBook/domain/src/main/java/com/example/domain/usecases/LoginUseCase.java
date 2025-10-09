@@ -3,13 +3,13 @@ package com.example.domain.usecases;
 import com.example.domain.repository.RecipeRepository;
 
 public class LoginUseCase {
-    private RecipeRepository recipeRepository;
+    private final RecipeRepository repository;
 
-    public LoginUseCase(RecipeRepository recipeRepository) {
-        this.recipeRepository = recipeRepository;
+    public LoginUseCase(RecipeRepository repository) {
+        this.repository = repository;
     }
 
     public boolean execute(String username, String password) {
-        return recipeRepository.login(username, password);
+        return repository.login(username, password);
     }
 }

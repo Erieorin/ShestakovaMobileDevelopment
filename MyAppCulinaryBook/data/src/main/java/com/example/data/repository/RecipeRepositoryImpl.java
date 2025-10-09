@@ -1,78 +1,100 @@
 package com.example.data.repository;
 
+import android.content.Context;
+
+import androidx.room.Room;
+
+import com.example.data.network.MockNetworkApi;
+import com.example.data.storage.SharedPrefStorage;
+import com.example.data.storage.room.AppDatabase;
+import com.example.data.storage.room.RecipeDao;
+import com.example.data.storage.room.RecipeEntity;
 import com.example.domain.models.Recipe;
 import com.example.domain.models.User;
 import com.example.domain.repository.RecipeRepository;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeRepositoryImpl implements RecipeRepository {
-    private List<Recipe> testRecipes = new ArrayList<>();
-    private List<User> users = new ArrayList<>();
-    private List<Recipe> favorites = new ArrayList<>();
 
-    public RecipeRepositoryImpl() {
-        testRecipes.add(new Recipe(1, "Борщ"));
-        testRecipes.add(new Recipe(2, "Паста Карбонара"));
-        testRecipes.add(new Recipe(3, "Картошка фри"));
-        testRecipes.add(new Recipe(4, "Наггетсф"));
-        testRecipes.add(new Recipe(5, "Голуби"));
+    private final SharedPrefStorage sharedPrefs;
+    private final RecipeDao recipeDao;
+    private final MockNetworkApi api;
+    private final FirebaseAuth auth;
+
+    public RecipeRepositoryImpl(Context context) {
+        sharedPrefs = new SharedPrefStorage(context);
+        recipeDao = Room.databaseBuilder(context, AppDatabase.class, "recipes.db")
+                .allowMainThreadQueries()
+                .build()
+                .recipeDao();
+        api = new MockNetworkApi();
+        auth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public boolean login(String username, String password) {
+        sharedPrefs.saveUser(username);
+        auth.signInWithEmailAndPassword(username, password);
+        return true;
+    }
+
+    @Override
+    public boolean register(User user) {
+        sharedPrefs.saveUser(user.getUsername());
+        auth.createUserWithEmailAndPassword(user.getUsername(), user.getPassword());
+        return true;
     }
 
     @Override
     public List<Recipe> getRecipes() {
-        return testRecipes;
+        List<RecipeEntity> entities = recipeDao.getAll();
+        List<Recipe> recipes = new ArrayList<>();
+        for (RecipeEntity e : entities) {
+            recipes.add(new Recipe(e.id, e.name));
+        }
+        recipes.addAll(api.getMockRecipes());
+
+        return recipes;
     }
+
     @Override
     public Recipe getRecipeById(int id) {
-        for (Recipe recipe : testRecipes) {
-            if (recipe.getId() == id) return recipe;
+        List<RecipeEntity> entities = recipeDao.getAll();
+        for (RecipeEntity e : entities) {
+            if (e.id == id) return new Recipe(e.id, e.name);
         }
         return null;
     }
 
     @Override
     public boolean addRecipe(Recipe recipe) {
-
-        return testRecipes.add(recipe);
-    }
-
-    public boolean editRecipe(Recipe recipe) {
-        for (int i = 0; i < testRecipes.size(); i++) {
-            if (testRecipes.get(i).getId() == recipe.getId()) {
-                testRecipes.set(i, recipe);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean addRecipeToFavorites(Recipe recipe) {
-        return favorites.add(recipe);
-    }
-
-    public List<Recipe> getFavorites() {
-        return favorites;
-    }
-
-    @Override
-    public boolean login(String username, String password) {
-        for (User u : users) {
-            if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean register(User user) {
-        for (User u : users) {
-            if (u.getUsername().equals(user.getUsername())) {
-                return false;}
-        }
-        users.add(user);
+        recipeDao.insert(new RecipeEntity(recipe.getName()));
         return true;
+    }
+
+    @Override
+    public boolean editRecipe(Recipe recipe) {
+        return true;
+    }
+
+    @Override
+    public boolean addRecipeToFavorites(Recipe recipe) {
+        return true;
+    }
+
+    @Override
+    public List<Recipe> getFavorites() {
+        return new ArrayList<>();
+    }
+
+    public String getCurrentUser() {
+        return sharedPrefs.getUser();
+    }
+
+    public void clearUser() {
+        sharedPrefs.clear();
     }
 }

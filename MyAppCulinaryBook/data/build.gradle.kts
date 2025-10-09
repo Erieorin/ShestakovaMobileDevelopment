@@ -31,6 +31,10 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(libs.appcompat)
+    implementation(libs.room.common.jvm)
+    implementation(libs.firebase.auth)
+    implementation(libs.room.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
+    annotationProcessor(libs.room.compiler)
 }

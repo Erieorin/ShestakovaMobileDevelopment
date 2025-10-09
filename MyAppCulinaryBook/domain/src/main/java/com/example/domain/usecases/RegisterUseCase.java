@@ -4,13 +4,13 @@ import com.example.domain.models.User;
 import com.example.domain.repository.RecipeRepository;
 
 public class RegisterUseCase {
-    private RecipeRepository recipeRepository;
+    private final RecipeRepository repository;
 
-    public RegisterUseCase(RecipeRepository recipeRepository) {
-        this.recipeRepository = recipeRepository;
+    public RegisterUseCase(RecipeRepository repository) {
+        this.repository = repository;
     }
 
     public boolean execute(User user) {
-        return recipeRepository.register(user);
+        return repository.register(user);
     }
 }

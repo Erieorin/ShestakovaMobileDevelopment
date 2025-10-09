@@ -6,13 +6,13 @@ import com.example.domain.repository.RecipeRepository;
 import java.util.List;
 
 public class GetRecipesUseCase {
-    private RecipeRepository recipeRepository;
+    private final RecipeRepository repository;
 
-    public GetRecipesUseCase(RecipeRepository recipeRepository) {
-        this.recipeRepository = recipeRepository;
+    public GetRecipesUseCase(RecipeRepository repository) {
+        this.repository = repository;
     }
 
     public List<Recipe> execute() {
-        return recipeRepository.getRecipes();
+        return repository.getRecipes();
     }
 }
