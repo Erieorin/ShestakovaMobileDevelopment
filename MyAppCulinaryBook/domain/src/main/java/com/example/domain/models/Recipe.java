@@ -1,4 +1,4 @@
-package com.example.rumireashestakovaculinarybook.domain.models;
+package com.example.domain.models;
 
 public class Recipe {
     private int id;

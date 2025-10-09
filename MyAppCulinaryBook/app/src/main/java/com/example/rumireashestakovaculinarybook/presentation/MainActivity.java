@@ -5,25 +5,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.rumireashestakovaculinarybook.R;
-import com.example.rumireashestakovaculinarybook.data.repository.RecipeRepositoryImpl;
-import com.example.rumireashestakovaculinarybook.domain.models.Recipe;
-import com.example.rumireashestakovaculinarybook.domain.models.User;
-import com.example.rumireashestakovaculinarybook.domain.repository.RecipeRepository;
-import com.example.rumireashestakovaculinarybook.domain.usecases.AddRecipeToFavoritesUseCase;
-import com.example.rumireashestakovaculinarybook.domain.usecases.AddRecipeUseCase;
-import com.example.rumireashestakovaculinarybook.domain.usecases.EditRecipeUseCase;
-import com.example.rumireashestakovaculinarybook.domain.usecases.GetFavoriteRecipesUseCase;
-import com.example.rumireashestakovaculinarybook.domain.usecases.GetRecipeByIdUseCase;
-import com.example.rumireashestakovaculinarybook.domain.usecases.GetRecipesUseCase;
-import com.example.rumireashestakovaculinarybook.domain.usecases.LoginUseCase;
-import com.example.rumireashestakovaculinarybook.domain.usecases.RegisterUseCase;
+import com.example.data.repository.RecipeRepositoryImpl;
+import com.example.domain.models.Recipe;
+import com.example.domain.models.User;
+import com.example.domain.repository.RecipeRepository;
+import com.example.domain.usecases.AddRecipeToFavoritesUseCase;
+import com.example.domain.usecases.AddRecipeUseCase;
+import com.example.domain.usecases.EditRecipeUseCase;
+import com.example.domain.usecases.GetFavoriteRecipesUseCase;
+import com.example.domain.usecases.GetRecipeByIdUseCase;
+import com.example.domain.usecases.GetRecipesUseCase;
+import com.example.domain.usecases.LoginUseCase;
+import com.example.domain.usecases.RegisterUseCase;
 
 import java.util.List;
 

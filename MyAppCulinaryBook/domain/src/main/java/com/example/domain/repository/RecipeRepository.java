@@ -1,6 +1,6 @@
-package com.example.rumireashestakovaculinarybook.domain.repository;
-import com.example.rumireashestakovaculinarybook.domain.models.Recipe;
-import com.example.rumireashestakovaculinarybook.domain.models.User;
+package com.example.domain.repository;
+import com.example.domain.models.Recipe;
+import com.example.domain.models.User;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
-package com.example.rumireashestakovaculinarybook.domain.usecases;
+package com.example.domain.usecases;
 
-import com.example.rumireashestakovaculinarybook.domain.models.Recipe;
-import com.example.rumireashestakovaculinarybook.domain.repository.RecipeRepository;
+import com.example.domain.models.Recipe;
+import com.example.domain.repository.RecipeRepository;
 
 public class GetRecipeByIdUseCase {
     private RecipeRepository recipeRepository;

@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "ru.mirea.Shestakova.CulinaryBook"
 include(":app")
+include(":data")
+include(":domain")

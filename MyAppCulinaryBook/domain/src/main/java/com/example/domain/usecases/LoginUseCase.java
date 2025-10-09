@@ -1,6 +1,6 @@
-package com.example.rumireashestakovaculinarybook.domain.usecases;
+package com.example.domain.usecases;
 
-import com.example.rumireashestakovaculinarybook.domain.repository.RecipeRepository;
+import com.example.domain.repository.RecipeRepository;
 
 public class LoginUseCase {
     private RecipeRepository recipeRepository;

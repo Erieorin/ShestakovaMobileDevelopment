@@ -1,8 +1,8 @@
-package com.example.rumireashestakovaculinarybook.data.repository;
+package com.example.data.repository;
 
-import com.example.rumireashestakovaculinarybook.domain.models.Recipe;
-import com.example.rumireashestakovaculinarybook.domain.models.User;
-import com.example.rumireashestakovaculinarybook.domain.repository.RecipeRepository;
+import com.example.domain.models.Recipe;
+import com.example.domain.models.User;
+import com.example.domain.repository.RecipeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
