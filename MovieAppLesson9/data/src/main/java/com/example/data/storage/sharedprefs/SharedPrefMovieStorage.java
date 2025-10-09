@@ -1,14 +1,10 @@
-package com.example.rumireashestakovalesson9.data.storage.sharedprefs;
+package com.example.data.storage.sharedprefs;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 
-import androidx.annotation.RequiresApi;
-
-import com.example.rumireashestakovalesson9.data.storage.MovieStorage;
-import com.example.rumireashestakovalesson9.data.storage.models.Movie;
+import com.example.data.storage.MovieStorage;
+import com.example.data.storage.models.Movie;
 
 import java.time.LocalDate;
 

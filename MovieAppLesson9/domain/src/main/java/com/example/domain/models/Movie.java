@@ -1,4 +1,4 @@
-package com.example.rumireashestakovalesson9.domain.models;
+package com.example.domain.models;
 
 public class Movie {
     private int id;

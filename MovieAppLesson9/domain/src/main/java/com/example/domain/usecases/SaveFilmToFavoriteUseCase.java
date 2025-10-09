@@ -1,7 +1,7 @@
-package com.example.rumireashestakovalesson9.domain.usecases;
+package com.example.domain.usecases;
 
-import com.example.rumireashestakovalesson9.domain.models.Movie;
-import com.example.rumireashestakovalesson9.domain.repository.MovieRepository;
+import com.example.domain.models.Movie;
+import com.example.domain.repository.MovieRepository;
 
 public class SaveFilmToFavoriteUseCase {
     private MovieRepository movieRepository;

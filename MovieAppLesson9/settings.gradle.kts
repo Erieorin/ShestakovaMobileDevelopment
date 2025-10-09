@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "ru.mirea.Shestakova.Lesson9"
 include(":app")
- 
+include(":data")
+include(":domain")

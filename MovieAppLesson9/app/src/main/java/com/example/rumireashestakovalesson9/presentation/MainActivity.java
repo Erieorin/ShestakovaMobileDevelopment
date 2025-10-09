@@ -7,13 +7,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rumireashestakovalesson9.R;
-import com.example.rumireashestakovalesson9.data.repository.MovieRepositoryImpl;
-import com.example.rumireashestakovalesson9.data.storage.MovieStorage;
-import com.example.rumireashestakovalesson9.data.storage.sharedprefs.SharedPrefMovieStorage;
-import com.example.rumireashestakovalesson9.domain.models.Movie;
-import com.example.rumireashestakovalesson9.domain.repository.MovieRepository;
-import com.example.rumireashestakovalesson9.domain.usecases.GetFavoriteFilmUseCase;
-import com.example.rumireashestakovalesson9.domain.usecases.SaveFilmToFavoriteUseCase;
+import com.example.data.repository.MovieRepositoryImpl;
+import com.example.data.storage.MovieStorage;
+import com.example.data.storage.sharedprefs.SharedPrefMovieStorage;
+import com.example.domain.models.Movie;
+import com.example.domain.repository.MovieRepository;
+import com.example.domain.usecases.GetFavoriteFilmUseCase;
+import com.example.domain.usecases.SaveFilmToFavoriteUseCase;
 
 public class MainActivity extends AppCompatActivity {
 

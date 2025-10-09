@@ -1,4 +1,4 @@
-package com.example.rumireashestakovalesson9.data.storage.models;
+package com.example.data.storage.models;
 
 public class Movie {
     private int id;
