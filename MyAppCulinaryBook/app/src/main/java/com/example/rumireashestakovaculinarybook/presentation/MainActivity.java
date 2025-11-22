@@ -7,25 +7,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.data.repository.RecipeRepositoryImpl;
 import com.example.domain.models.Recipe;
-import com.example.domain.usecases.AddRecipeUseCase;
-import com.example.domain.usecases.GetRecipesUseCase;
 import com.example.rumireashestakovaculinarybook.R;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView tvUserEmail, tvResult;
+    private MainViewModel mainViewModel;
+    private AuthViewModel authViewModel;
+    private TextView tvUserEmail;
     private Button btnGetRecipes, btnAddRecipe, btnLogout;
-    private FirebaseAuth auth;
 
-    private GetRecipesUseCase getRecipesUseCase;
-    private AddRecipeUseCase addRecipeUseCase;
-    private RecipeRepositoryImpl repository;
+    private RecyclerView rvRecipes;
+    private RecipesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,51 +32,48 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tvUserEmail = findViewById(R.id.tvUserEmail);
-        tvResult = findViewById(R.id.tvResult);
         btnGetRecipes = findViewById(R.id.btnGetRecipes);
         btnAddRecipe = findViewById(R.id.btnAddRecipe);
         btnLogout = findViewById(R.id.btnLogout);
 
-        auth = FirebaseAuth.getInstance();
-        repository = new RecipeRepositoryImpl(this);
+        mainViewModel = new ViewModelProvider(this, new ViewModelFactory(this))
+                .get(MainViewModel.class);
+        authViewModel = new ViewModelProvider(this, new AuthViewModelFactory(getApplication()))
+                .get(AuthViewModel.class);
 
-        getRecipesUseCase = new GetRecipesUseCase(repository);
-        addRecipeUseCase = new AddRecipeUseCase(repository);
+        authViewModel.isUserLoggedIn().observe(this, loggedIn -> {
+            if (loggedIn == null || !loggedIn) {
+                startActivity(new Intent(this, AuthActivity.class));
+                finish();
+            }
+        });
 
-        String email = repository.getCurrentUser();
-        tvUserEmail.setText(email != null ? "Вы вошли как: " + email : "Пользователь не найден");
+        authViewModel.getCurrentUserEmail().observe(this, email ->
+                tvUserEmail.setText(email != null ? "Вы вошли как: " + email : "Пользователь не найден")
+        );
 
-        btnGetRecipes.setOnClickListener(v -> showRecipes());
-        btnAddRecipe.setOnClickListener(v -> addRecipe());
-        btnLogout.setOnClickListener(v -> logout());
-    }
+        rvRecipes = findViewById(R.id.rvRecipes);
+        adapter = new RecipesAdapter();
+        rvRecipes.setAdapter(adapter);
+        rvRecipes.setLayoutManager(new LinearLayoutManager(this));
 
-    private void showRecipes() {
-        List<Recipe> recipes = getRecipesUseCase.execute();
-        if (recipes.isEmpty()) {
-            tvResult.setText("Рецептов нет");
-            return;
-        }
+        mainViewModel.getCombinedRecipes().observe(this, recipes -> {
+            adapter.setItems(recipes);
+        });
 
-        StringBuilder builder = new StringBuilder();
-        for (Recipe r : recipes) {
-            builder.append(r.getId()).append(". ").append(r.getName()).append("\n");
-        }
-        tvResult.setText(builder.toString());
-    }
+        btnGetRecipes.setOnClickListener(v -> {
+            new Thread(() -> {
+                List<Recipe> recipes = mainViewModel.loadRecipesFromApi();
+                runOnUiThread(() -> adapter.setItems(recipes));
+            }).start();
+        });
 
-    private void addRecipe() {
-        Recipe newRecipe = new Recipe(0, "Новый рецепт #" + System.currentTimeMillis());
-        boolean result = addRecipeUseCase.execute(newRecipe);
-        Toast.makeText(this, result ? "Рецепт добавлен!" : "Ошибка", Toast.LENGTH_SHORT).show();
-        showRecipes();
-    }
+        btnAddRecipe.setOnClickListener(v -> {
+            Recipe newRecipe = new Recipe(0, "Новый рецепт #" + System.currentTimeMillis());
+            mainViewModel.addRecipe(newRecipe);
+            Toast.makeText(this, "Рецепт добавлен!", Toast.LENGTH_SHORT).show();
+        });
 
-    private void logout() {
-        auth.signOut();
-        repository.clearUser();
-        Intent intent = new Intent(this, AuthActivity.class);
-        startActivity(intent);
-        finish();
+        btnLogout.setOnClickListener(v -> authViewModel.logout());
     }
 }

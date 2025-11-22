@@ -16,6 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        jcenter()
     }
 }
 
@@ -23,3 +24,10 @@ rootProject.name = "ru.mirea.Shestakova.Lesson9"
 include(":app")
 include(":data")
 include(":domain")
+include(":scrollviewapp")
+include(":listviewapp")
+include(":recyclerviewapp")
+include(":retrofitapp")
+include(":fragmentapp")
+include(":fragmentmanagerapp")
+include(":resultapifragmentapp")

@@ -5,6 +5,8 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.example.data.network.MockNetworkApi;
+import com.example.data.network.RetrofitClient;
+import com.example.data.network.SpoonacularApi;
 import com.example.data.storage.SharedPrefStorage;
 import com.example.data.storage.room.AppDatabase;
 import com.example.data.storage.room.RecipeDao;
@@ -50,12 +52,24 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 
     @Override
     public List<Recipe> getRecipes() {
-        List<RecipeEntity> entities = recipeDao.getAll();
         List<Recipe> recipes = new ArrayList<>();
+
+        try {
+            SpoonacularApi api = RetrofitClient.getApi();
+            retrofit2.Response<SpoonacularApi.RandomRecipesResponse> response =
+                    api.getRandomRecipes(5, "b54ea24d91614381b44882aada110833").execute();
+
+            if (response.isSuccessful() && response.body() != null) {
+                recipes.addAll(response.body().recipes);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        List<RecipeEntity> entities = recipeDao.getAll();
         for (RecipeEntity e : entities) {
             recipes.add(new Recipe(e.id, e.name));
         }
-        recipes.addAll(api.getMockRecipes());
 
         return recipes;
     }

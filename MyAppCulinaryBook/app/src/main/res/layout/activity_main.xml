@@ -48,17 +48,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="12dp" />
 
-    <TextView
-        android:id="@+id/tvResult"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRecipes"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="Здесь будут результаты"
-        android:textSize="15sp"
-        android:gravity="top|start"
-        android:scrollbars="vertical"
-        android:padding="12dp"
         app:layout_constraintTop_toBottomOf="@id/btnLogout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
