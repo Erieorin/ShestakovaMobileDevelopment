@@ -1,79 +1,38 @@
 package com.example.rumireashestakovaculinarybook.presentation;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.domain.models.Recipe;
+import androidx.fragment.app.Fragment;
 import com.example.rumireashestakovaculinarybook.R;
-
-import java.util.List;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-
-    private MainViewModel mainViewModel;
-    private AuthViewModel authViewModel;
-    private TextView tvUserEmail;
-    private Button btnGetRecipes, btnAddRecipe, btnLogout;
-
-    private RecyclerView rvRecipes;
-    private RecipesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvUserEmail = findViewById(R.id.tvUserEmail);
-        btnGetRecipes = findViewById(R.id.btnGetRecipes);
-        btnAddRecipe = findViewById(R.id.btnAddRecipe);
-        btnLogout = findViewById(R.id.btnLogout);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        if (savedInstanceState == null) {
+            loadFragment(new RecipesFragment());
+        }
 
-        mainViewModel = new ViewModelProvider(this, new ViewModelFactory(this))
-                .get(MainViewModel.class);
-        authViewModel = new ViewModelProvider(this, new AuthViewModelFactory(getApplication()))
-                .get(AuthViewModel.class);
-
-        authViewModel.isUserLoggedIn().observe(this, loggedIn -> {
-            if (loggedIn == null || !loggedIn) {
-                startActivity(new Intent(this, AuthActivity.class));
-                finish();
-            }
+        bottomNav.setOnItemSelectedListener(item -> {
+            Fragment fragment = null;
+            if (item.getItemId() == R.id.nav_recipes) fragment = new RecipesFragment();
+            if (item.getItemId() == R.id.nav_profile) fragment = new ProfileFragment();
+            if (item.getItemId() == R.id.nav_food) fragment = new FoodRecognitionFragment();
+            if (fragment != null) loadFragment(fragment);
+            return true;
         });
+    }
 
-        authViewModel.getCurrentUserEmail().observe(this, email ->
-                tvUserEmail.setText(email != null ? "Вы вошли как: " + email : "Пользователь не найден")
-        );
-
-        rvRecipes = findViewById(R.id.rvRecipes);
-        adapter = new RecipesAdapter();
-        rvRecipes.setAdapter(adapter);
-        rvRecipes.setLayoutManager(new LinearLayoutManager(this));
-
-        mainViewModel.getCombinedRecipes().observe(this, recipes -> {
-            adapter.setItems(recipes);
-        });
-
-        btnGetRecipes.setOnClickListener(v -> {
-            new Thread(() -> {
-                List<Recipe> recipes = mainViewModel.loadRecipesFromApi();
-                runOnUiThread(() -> adapter.setItems(recipes));
-            }).start();
-        });
-
-        btnAddRecipe.setOnClickListener(v -> {
-            Recipe newRecipe = new Recipe(0, "Новый рецепт #" + System.currentTimeMillis());
-            mainViewModel.addRecipe(newRecipe);
-            Toast.makeText(this, "Рецепт добавлен!", Toast.LENGTH_SHORT).show();
-        });
-
-        btnLogout.setOnClickListener(v -> authViewModel.logout());
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, fragment)
+                .addToBackStack(null) // добавляем в BackStack
+                .commit();
     }
 }

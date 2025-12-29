@@ -18,14 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewModel = new ViewModelProvider(this).get(ShareViewModel.class);
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.headerContainerView, HeaderFragment.newInstance(), "header")
-                    .add(R.id.detailsContainerView, new DetailsFragment(), "details")
-                    .commit();
-        }
+        viewModel = new ViewModelProvider(this)
+                .get(ShareViewModel.class);
     }
 }

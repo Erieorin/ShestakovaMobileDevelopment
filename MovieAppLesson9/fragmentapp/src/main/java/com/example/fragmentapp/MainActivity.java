@@ -9,16 +9,25 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("my_number_student", 23);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.fragment_container_view, BlankFragment.newInstance(123))
+                    .add(R.id.fragment_container_view,
+                            BlankFragment.class,
+                            bundle)
                     .commit();
         }
     }
 }
+

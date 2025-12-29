@@ -1,6 +1,7 @@
 package com.example.fragmentmanagerapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +15,25 @@ import androidx.lifecycle.ViewModelProvider;
 public class DetailsFragment extends Fragment {
 
     private ShareViewModel viewModel;
-    private TextView textViewDetails;
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_details, container, false);
+    public DetailsFragment() {
+        super(R.layout.fragment_details);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 
-        textViewDetails = view.findViewById(R.id.textViewDetails);
-        viewModel = new ViewModelProvider(requireActivity()).get(ShareViewModel.class);
+        TextView textView = view.findViewById(R.id.textDetails);
 
-        viewModel.getSelectedItem().observe(getViewLifecycleOwner(), item -> {
-            textViewDetails.setText("Вы выбрали: " + item);
-        });
+        viewModel = new ViewModelProvider(requireActivity())
+                .get(ShareViewModel.class);
+
+        viewModel.getSelectedItem().observe(
+                getViewLifecycleOwner(),
+                item -> {
+                    textView.setText("Вы выбрали: " + item);
+                    Log.d("DetailsFragment", item);
+                }
+        );
     }
 }

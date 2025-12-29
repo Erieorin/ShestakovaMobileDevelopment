@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#F0D6F5">
+
+    <TextView
+        android:id="@+id/tvProfileEmail"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#4B0082"
+        android:layout_marginBottom="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:text="Выйти"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rounded_button_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"/>
+</LinearLayout>

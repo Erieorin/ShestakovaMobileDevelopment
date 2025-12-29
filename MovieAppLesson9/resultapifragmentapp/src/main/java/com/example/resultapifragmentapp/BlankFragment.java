@@ -15,24 +15,20 @@ public class BlankFragment extends Fragment {
     private FragmentListener listener;
 
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(Context context) {
         super.onAttach(context);
         try {
             listener = (FragmentListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context + " must implement FragmentListener");
+            throw new ClassCastException(context + " must implement onSomeEventListener");
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
-
         ImageView image = view.findViewById(R.id.imageView);
         image.setOnClickListener(view1 -> listener.sendResult("image pushed"));
-
         return view;
     }
 }
